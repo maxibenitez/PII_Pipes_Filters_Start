@@ -10,7 +10,7 @@ namespace CompAndDel
     {
         static void Main(string[] args)
         {
-            //Ejercicio 1
+            //Ejercicio 1, 2 y 3
             PictureProvider provider = new PictureProvider();
             IPicture picture = provider.GetPicture(@"luke.jpg");
 
@@ -30,6 +30,16 @@ namespace CompAndDel
             provider.SavePicture(imagenFiltroDesaturar, @"lukeToFiltroDesaturar.jpg");
             TwitterImage posteoDesaturar = new TwitterImage();
             posteoDesaturar.PublishToTwitter("No entiendo nada 2.0", @"lukeToFiltroDesaturar.jpg");
+
+            //Ejercicio 4
+            IFilter filtrofacial = new FilterConditional();
+            IPipe filtro1 = new PipeNull();
+
+            IPipe reconocimiento = new PipeSerial(filtrofacial, filtro1);
+            IPicture imagenFiltroReconocimiento = reconocimiento.Send(picture);
+            provider.SavePicture(imagenFiltroReconocimiento, @"lukeToFiltroReconocimiento.jpg");
+            TwitterImage posteoFacial = new TwitterImage();
+            posteoFacial.PublishToTwitter("No entiendo nada 3.0", @"lukeToFiltroReconocimiento.jpg");
         }
     }
 }
